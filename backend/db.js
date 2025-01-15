@@ -3,13 +3,11 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 
 
-main().catch(err => console.log(err));
 
-async function main() {
-  await mongoose.connect("mongodb+srv://abdulazeespr:ly3P5902bfkSYxLZ@payme.9n8ib.mongodb.net/PayMe");
 
-  // use `await mongoose.connect('mongodb://user:password@127.0.0.1:27017/test');` if your database has auth enabled
-}
+mongoose.connect("mongodb+srv://abdulazeespr:ly3P5902bfkSYxLZ@payme.9n8ib.mongodb.net/?retryWrites=true&w=majority&appName=PayMe")
+
+
 
 const userSchema = new Schema({
     userName:{type:String,required :true},
@@ -18,11 +16,18 @@ const userSchema = new Schema({
     password :{type:String,required :true},
 })
 
+const accountSchema = new Schema({
+  userId : {type:Schema.Types.ObjectId,ref:"Users",required:true},
+  balance :{type: Number,required :true}
+})
+
 
 const Users = mongoose.model('User',userSchema);
+const Account = mongoose.model('Account',accountSchema)
 
 module.exports = {
-    Users
+    Users,
+    Account
 }
 
 

@@ -1,7 +1,7 @@
 const express = require("express")
 const z = require("zod")
 const jwt = require("jsonwebtoken")
-const {Users} = require("../db")
+const {Users, Account} = require("../db")
 const JWT_SECRET = require("../config")
 const {authMiddleware} = require("../middleware")
 
@@ -29,10 +29,10 @@ userRouter.post("/signup",async (req,res)=>{
 
 
   const user = await Users.findOne({
-    userName:req.body.userName
+    userName:req.body.username
   })
 
- if(user._id){
+ if(user){
     res.status(411).json({"message":"Email already taken / Incorrect inputs"})
     return 
  }
@@ -40,11 +40,16 @@ userRouter.post("/signup",async (req,res)=>{
 
   const newUser = await Users.create({
     userName:req.body.username,
-    firstName:req.body.firstName,
-    lastName:req.body.lastName,
+    firstName:req.body.firstname,
+    lastName:req.body.lastname,
     password:req.body.password
 
   })
+
+   await Account.create({
+    userId:newUser._id,
+    balance:1000,
+   })
 
   const token = jwt.sign({
     userId:newUser._id
@@ -61,14 +66,14 @@ userRouter.post("/signup",async (req,res)=>{
 })
 
 const signinInput = z.object({
-    userName:z.string.email(),
+    userName:z.string().email(),
     password:z.string(),
 })
 
 userRouter.post("/signin",async (req,res)=>{
 
 const {success} = signinInput.safeParse({
-    userName:req.body.userName,
+    userName:req.body.username,
     password:req.body.password
 })
 
@@ -80,11 +85,11 @@ const {success} = signinInput.safeParse({
 
 
   const user = await Users.findOne({
-    userName:req.body.userName,
+    userName:req.body.username,
     password:req.body.password
   })
   if(user){
-   const token = jwt.verify(req.body.token,JWT_SECRET)
+   const token = jwt.sign({userId:user._id},JWT_SECRET)
 
      res.json({
         token:token
@@ -103,7 +108,7 @@ const {success} = signinInput.safeParse({
 const updateInput = z.object({
   firstName:z.string(),
   lastName:z.string(),
-  password:z.password()
+  password:z.string()
 })
 
 userRouter.put("/",authMiddleware,async (req,res)=>{
