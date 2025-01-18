@@ -8,7 +8,7 @@ function App() {
   
 
   return (
-   <>
+   <div>
     <BrowserRouter>
     <Routes>
       <Route path='/signup' element={<Signup/>}/>
@@ -17,7 +17,7 @@ function App() {
       <Route path='/send' element={<SendMoney/>}/>
     </Routes>
     </BrowserRouter>
-   </>
+   </div>
   )
 }
 

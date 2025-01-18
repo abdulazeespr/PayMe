@@ -1,12 +1,14 @@
 import React from 'react'
 import Appbar from '../components/Appbar'
 import  Balance  from "../components/Balance";
+import UserList from '../components/UserList';
 const Dashboard = () => {
   return (
-    <div className="h-screen bg-blue-200 ">
+    <div className="min-h-screen max-h-full  bg-blue-200  ">
       <Appbar/>
       <Balance  value={"10,000"}/>
-    </div>
+      <UserList  className="h-full" />
+      </div>
   )
 }
 
