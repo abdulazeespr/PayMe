@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 
 
-mongoose.connect("mongodb+srv://abdulazeespr:ly3P5902bfkSYxLZ@payme.9n8ib.mongodb.net/?retryWrites=true&w=majority&appName=PayMe")
+mongoose.connect("")
 
 
 

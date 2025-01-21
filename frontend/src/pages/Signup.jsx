@@ -4,9 +4,8 @@ import SubHeader from '../components/SubHeader'
 import InputBox from '../components/InputBox'
 import Button from '../components/Button'
 import BottomWarning from '../components/BottomWarning'
-import axios from 'axios'
-import { redirect } from 'react-router-dom'
-
+import axios from 'axios' 
+import { useNavigate } from "react-router-dom";
 
 
 const Signup = () => {
@@ -52,7 +51,7 @@ const Signup = () => {
            console.log(response.data)
            localStorage.setItem("token",response.data.token)
            
-           redirect("/dashboard")
+           useNavigate("/dashboard")
         }}/>
         <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"}/>
         </div>
