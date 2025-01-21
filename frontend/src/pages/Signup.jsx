@@ -40,7 +40,7 @@ const Signup = () => {
          }}
         label={"Password"} placeholder={"123456"} type={"password"}/>
         <Button label={"Sign up"} onClick={ async ()=>{
-       const response = await axios.post(`http://localhost:3000/api/v1/user/signup`,
+       const response = await axios.post(`${import.meta.env.BACKEND_URL}user/signup`,
             {
               firstname,
               lastname,

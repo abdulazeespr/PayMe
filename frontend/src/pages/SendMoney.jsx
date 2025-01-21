@@ -45,7 +45,7 @@ const SendMoney = () => {
                   </div>
                   <button 
                   onClick={(e)=>{
-                    axios.post("http://localhost:3000/api/v1/account/transfer",{
+                    axios.post(`${import.meta.env.BACKEND_URL}account/transfer`,{
                         to:id,
                         amount,
                         token : localStorage.getItem("token")
